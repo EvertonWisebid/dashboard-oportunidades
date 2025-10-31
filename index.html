@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Relatório Produção - 29 e 30/10</title>
+  <title>Relatório Produção - 30/10</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --bg: #f9fafb; --card: #ffffff; --border: #e5e7eb;
       --text: #1f2937; --gray: #6b7280;
-      --funnel-1: #22c55e; --funnel-2: #3b82f6; --funnel-3: #f59e0b; --funnel-4: #94a3b8; --funnel-5: #ef4444;
+      --funnel-1: #22c55e; --funnel-2: #3b82f6; --funnel-3: #f59e0b; --funnel-4: #94a3b8; --funnel-5: #16a34a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -19,32 +19,18 @@
     }
     .container { max-width: 1900px; margin: auto; }
 
-    /* CABEÇALHO */
     .header {
       display: flex; align-items: center; margin-bottom: 18px; border-bottom: 2px solid var(--border); padding-bottom: 10px;
     }
-    .logo {
-      max-width: 140px; height: auto; margin-right: 20px;
-    }
-    .title-block { flex: 1; }
-    .title {
-      font-size: 1.85em; font-weight: 600;
-      /* COR EXTRAÍDA DA LOGO: será aplicada via JS abaixo */
-    }
+    .logo { max-width: 140px; height: auto; margin-right: 20px; }
+    .title { font-size: 1.85em; font-weight: 600; }
     .subtitle { font-size: 1.05em; color: var(--gray); margin-top: 4px; }
 
-    /* GRID PRINCIPAL */
-    .grid { 
-      display: grid; 
-      grid-template-columns: 1.35fr 1fr; 
-      gap: 18px; 
-      height: calc(100vh - 155px);
-    }
+    .grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; height: calc(100vh - 155px); }
     .left, .right { overflow-y: auto; padding-right: 8px; }
     .left::-webkit-scrollbar, .right::-webkit-scrollbar { width: 5px; }
     .left::-webkit-scrollbar-thumb, .right::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
-    /* SEÇÕES */
     .section {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
       padding: 16px; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -52,10 +38,8 @@
     .section h2 {
       font-size: 1.3em; margin-bottom: 10px; font-weight: 600;
       border-bottom: 1px solid var(--border); padding-bottom: 5px;
-      /* COR DO TÍTULO = COR DA LOGO */
     }
 
-    /* TABELAS */
     table {
       width: 100%; border-collapse: collapse; font-size: 0.9em; margin: 10px 0;
     }
@@ -65,33 +49,14 @@
     th {
       background: #f8fafc; font-weight: 600; font-size: 0.88em;
     }
-    tr:hover { background: #f8fafc; }
 
-    /* FUNIL REAL (COMO NO PDF) */
+    .funnel-title {
+      text-align: center; font-weight: bold; margin: 30px 0 20px; font-size: 1.15em;
+    }
     .funnel-container {
-      display: flex; flex-direction: column; align-items: center; margin: 18px 0;
+      display: flex; flex-direction: column; align-items: center; gap: 15px; margin: 20px 0;
     }
-    .funnel-stage {
-      width: 100%; text-align: center; color: white; font-weight: bold;
-      padding: 14px 0; margin: 3px 0; position: relative; overflow: hidden;
-      clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
-      font-size: 1.1em;
-    }
-    .funnel-stage::before {
-      content: attr(data-label); position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
-      font-size: 0.9em; font-weight: normal; opacity: 0.9;
-    }
-    .funnel-stage::after {
-      content: attr(data-percent); position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-      font-size: 0.9em; opacity: 0.9;
-    }
-    .stage-1 { background: var(--funnel-1); width: 100%; }
-    .stage-2 { background: var(--funnel-2); width: 90%; }
-    .stage-3 { background: var(--funnel-3); width: 75%; }
-    .stage-4 { background: var(--funnel-4); width: 67%; }
-    .stage-5 { background: var(--funnel-5); width: 60%; }
 
-    /* INSIGHTS */
     .insight {
       padding: 12px; border-radius: 8px; margin: 12px 0; font-size: 0.92em;
       border-left: 4px solid;
@@ -99,10 +64,8 @@
     .insight.warning { background: #fffbeb; border-color: #ca8a04; color: #92400e; }
     .insight.success { background: #f0fdf4; border-color: #15803d; color: #166534; }
 
-    /* GRÁFICO RANKING */
     .ranking-chart { height: 260px; margin: 12px 0; }
 
-    /* RODAPÉ */
     .footer {
       text-align: center; font-size: 0.78em; color: var(--gray); margin-top: 15px;
       border-top: 1px solid var(--border); padding-top: 8px;
@@ -111,106 +74,87 @@
 </head>
 <body>
   <div class="container">
-    <!-- CABEÇALHO -->
     <div class="header">
       <img src="logo.png" alt="Logo" class="logo" id="logo">
       <div class="title-block">
         <div class="title" id="main-title">Relatório de Desempenho de Produção de Oportunidades</div>
-        <div class="subtitle">29 e 30 de Outubro de 2025</div>
+        <div class="subtitle">30 de Outubro de 2025</div>
       </div>
     </div>
 
     <div class="grid">
-      <!-- COLUNA ESQUERDA -->
       <div class="left">
         <!-- FUNIL DE APROVAÇÃO -->
-        <!-- FUNIL DE APROVAÇÃO (100% IDÊNTICO AO PDF) -->
-<div class="section">
-<!-- FUNIL DE APROVAÇÃO (100% IDÊNTICO AO PDF OFICIAL) -->
-<div class="section">
-  <h2 id="section-title-1">A. Produção Coletiva (Visão Macro)</h2>
-  
-  <!-- TABELA DE VOLUME E TAXAS -->
-  <table>
-    <thead>
-      <tr><th>Etapa</th><th>Total (Volume)</th><th>Conversão da Etapa Anterior (%)</th><th>Conversão Total (%)</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Adicionadas</td><td>31</td><td>N/A</td><td>100.0%</td></tr>
-      <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>16</td><td>51.6%</td><td>51.6%</td></tr>
-      <tr><td>Aprovadas em Análise Jurídica</td><td>6</td><td>37.5%</td><td>19.4%</td></tr>
-      <tr><td>Aprovadas em Validação Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
-      <tr><td>Aprovadas em Viabilidade Total</td><td>1</td><td>—</td><td>3.2%</td></tr>
-    </tbody>
-  </table>
+        <div class="section">
+          <h2 id="section-title-1">A. Produção Coletiva (Visão Macro)</h2>
+          
+          <table>
+            <thead><tr><th>Etapa</th><th>Total (Volume)</th><th>Conversão da Etapa Anterior (%)</th><th>Conversão Total (%)</th></tr></thead>
+            <tbody>
+              <tr><td>Adicionadas</td><td>11</td><td>N/A</td><td>100.0%</td></tr>
+              <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>3</td><td>27.3%</td><td>27.3%</td></tr>
+              <tr><td>Aprovadas em Análise Jurídica</td><td>3</td><td>100.0%</td><td>27.3%</td></tr>
+              <tr><td>Aprovadas em Validação Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
+              <tr><td>Aprovadas em Viabilidade Total</td><td>1</td><td>—</td><td>9.1%</td></tr>
+            </tbody>
+          </table>
 
-  <!-- TÍTULO DO GRÁFICO -->
-  <div style="text-align: center; font-weight: bold; margin: 30px 0 20px; font-size: 1.15em;">
-    Funil de Aprovação Coletivo (Volume e Taxas de Conversão)
-  </div>
+          <div class="funnel-title">Funil de Aprovação Coletivo (Volume e Taxas de Conversão)</div>
 
-  <!-- FUNIL VISUAL (EXATAMENTE COMO NO PDF) -->
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin: 20px 0; font-family: 'Segoe UI', sans-serif;">
+          <div class="funnel-container">
+            <div style="background: var(--funnel-1); color: white; padding: 22px 50px; border-radius: 14px; width: 78%; text-align: center; position: relative; box-shadow: 0 4px 12px rgba(34,197,94,0.3);">
+              <div style="position: absolute; left: 25px; top: 50%; transform: translateY(-50%); font-size: 1.05em; font-weight: 600;">Adicionadas</div>
+              <div style="font-size: 3.2em; font-weight: bold;">11</div>
+              <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); font-size: 0.95em; text-align: right; line-height: 1.4;">
+                <strong>Total: 100.0%</strong><br>Etapa: N/A
+              </div>
+            </div>
 
-    <!-- ETAPA 1: Adicionadas -->
-    <div style="background: #22c55e; color: white; padding: 22px 50px; border-radius: 14px; width: 78%; text-align: center; position: relative; box-shadow: 0 4px 12px rgba(34,197,94,0.3);">
-      <div style="position: absolute; left: 25px; top: 50%; transform: translateY(-50%); font-size: 1.05em; font-weight: 600;">Adicionadas</div>
-      <div style="font-size: 3.2em; font-weight: bold; letter-spacing: 1px;">31</div>
-      <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); font-size: 0.95em; text-align: right; line-height: 1.4;">
-        <strong>Total: 100.0%</strong><br>Etapa: N/A
-      </div>
-    </div>
+            <div style="background: var(--funnel-2); color: white; padding: 20px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
+              <div style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-size: 0.98em; font-weight: 600; width: 38%; text-align: left; line-height: 1.3;">
+                Aprovadas em Análise<br>Mercadológica/Financeira
+              </div>
+              <div style="font-size: 2.8em; font-weight: bold;">3</div>
+              <div style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 0.88em; text-align: right; line-height: 1.4;">
+                <strong>Total: 27.3%</strong><br>Etapa: 27.3%
+              </div>
+            </div>
 
-    <!-- ETAPA 2: M/F -->
-    <div style="background: #3b82f6; color: white; padding: 20px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
-      <div style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-size: 0.98em; font-weight: 600; width: 38%; text-align: left; line-height: 1.3;">
-        Aprovadas em Análise<br>Mercadológica/Financeira
-      </div>
-      <div style="font-size: 2.8em; font-weight: bold;">16</div>
-      <div style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 0.88em; text-align: right; line-height: 1.4;">
-        <strong>Total: 51.6%</strong><br>Etapa: 51.6%
-      </div>
-    </div>
+            <div style="background: var(--funnel-3); color: white; padding: 18px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(245,158,11,0.3);">
+              <div style="position: absolute; left: 25px; top: 50%; transform: translateY(-50%); font-size: 0.92em; font-weight: 600; width: 36%; text-align: left; line-height: 1.3;">
+                Aprovadas em<br>Análise Jurídica
+              </div>
+              <div style="font-size: 2.4em; font-weight: bold;">3</div>
+              <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); font-size: 0.82em; text-align: right; line-height: 1.4;">
+                <strong>Total: 27.3%</strong><br>Etapa: 100.0%
+              </div>
+            </div>
 
-    <!-- ETAPA 3: Jurídica -->
-    <div style="background: #f59e0b; color: white; padding: 18px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(245,158,11,0.3);">
-      <div style="position: absolute; left: 25px; top: 50%; transform: translateY(-50%); font-size: 0.92em; font-weight: 600; width: 36%; text-align: left; line-height: 1.3;">
-        Aprovadas em<br>Análise Jurídica
-      </div>
-      <div style="font-size: 2.4em; font-weight: bold;">6</div>
-      <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); font-size: 0.82em; text-align: right; line-height: 1.4;">
-        <strong>Total: 19.4%</strong><br>Etapa: 37.5%
-      </div>
-    </div>
+            <div style="background: var(--funnel-4); color: white; padding: 16px 35px; width: 42%; text-align: center; position: relative; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(148,163,184,0.3);">
+              <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 0.88em; font-weight: 600; width: 34%; text-align: left; line-height: 1.3;">
+                Aprovadas em<br>Validação Jurídica
+              </div>
+              <div style="font-size: 2.1em; font-weight: bold;">0</div>
+              <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 0.78em; text-align: right; line-height: 1.4;">
+                <strong>Total: 0.0%</strong><br>Etapa: 0.0%
+              </div>
+            </div>
 
-    <!-- ETAPA 4: Validação -->
-    <div style="background: #94a3b8; color: white; padding: 16px 35px; width: 42%; text-align: center; position: relative; clip-path: polygon(28% 0%, 72% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(148,163,184,0.3);">
-      <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 0.88em; font-weight: 600; width: 34%; text-align: left; line-height: 1.3;">
-        Aprovadas em<br>Validação Jurídica
-      </div>
-      <div style="font-size: 2.1em; font-weight: bold;">0</div>
-      <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 0.78em; text-align: right; line-height: 1.4;">
-        <strong>Total: 0.0%</strong><br>Etapa: 0.0%
-      </div>
-    </div>
+            <div style="background: var(--funnel-5); color: white; padding: 16px 30px; width: 30%; text-align: center; position: relative; border-radius: 0 0 14px 14px; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(22,163,74,0.3);">
+              <div style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 0.82em; font-weight: 600; width: 30%; text-align: left; line-height: 1.3;">
+                Viabilidade Total
+              </div>
+              <div style="font-size: 1.9em; font-weight: bold;">1</div>
+              <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 0.72em; text-align: right; line-height: 1.4;">
+                <strong>Total: 9.1%</strong>
+              </div>
+            </div>
+          </div>
 
-    <!-- ETAPA 5: Viabilidade Total -->
-    <div style="background: #16a34a; color: white; padding: 16px 30px; width: 30%; text-align: center; position: relative; border-radius: 0 0 14px 14px; clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%); box-shadow: 0 4px 12px rgba(22,163,74,0.3);">
-      <div style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 0.82em; font-weight: 600; width: 30%; text-align: left; line-height: 1.3;">
-        Aprovadas em<br>Viabilidade Total
-      </div>
-      <div style="font-size: 1.9em; font-weight: bold;">1</div>
-      <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 0.72em; text-align: right; line-height: 1.4;">
-        <strong>Total: 3.2%</strong>
-      </div>
-    </div>
-  </div>
-
-  <!-- INSIGHT CHAVE -->
-  <div class="insight warning" style="margin-top: 30px; padding: 16px; font-size: 0.98em; line-height: 1.5;">
-    <strong>Insight Chave:</strong> O principal gargalo no funil de aprovação se concentra na primeira transição: de <strong>Adicionadas (31)</strong> para <strong>Aprovadas em Análise Mercadológica/Financeira (16)</strong>, com uma taxa de conversão de apenas <strong>51.6%</strong>. Isso sugere que a maioria dos ativos adicionados não atende aos critérios iniciais de mercado/financeiros.
-  </div>
-</div>
+          <div class="insight warning" style="margin-top: 30px; padding: 16px; font-size: 0.98em; line-height: 1.5;">
+            <strong>Insight Chave:</strong> O principal gargalo no funil de aprovação se concentra na primeira transição: de <strong>Adicionadas (11)</strong> para <strong>Aprovadas em Análise Mercadológica/Financeira (3)</strong>, com uma taxa de conversão de apenas <strong>27.3%</strong>. Isso sugere que a maioria dos ativos adicionados não atende aos critérios iniciais de mercado/financeiros.
+          </div>
+        </div>
 
         <!-- FUNIL DE PERDAS -->
         <div class="section">
@@ -218,43 +162,39 @@
           <table>
             <thead><tr><th>Etapa</th><th>Total</th></tr></thead>
             <tbody>
-              <tr><td>Reprovadas em Análise M/F</td><td>14</td></tr>
-              <tr><td>Reprovadas em Análise Jurídica</td><td>2</td></tr>
+              <tr><td>Reprovadas em Análise M/F</td><td>4</td></tr>
+              <tr><td>Reprovadas em Análise Jurídica</td><td>0</td></tr>
               <tr><td>Devolvidas à Pesquisa</td><td>0</td></tr>
               <tr><td>Retiradas/Sustadas</td><td>0</td></tr>
               <tr><td>Reprovadas em Viabilidade Total</td><td>0</td></tr>
             </tbody>
           </table>
+          <div class="insight warning" style="margin-top: 15px;">
+            <strong>Insight Chave:</strong> O volume de perdas (4 oportunidades) ocorreu na <strong>Reprovação em Análise Mercadológica/Financeira</strong>. Este é o ponto de maior dispersão de ativos, reforçando a necessidade de revisar os critérios de entrada ou a qualidade da pesquisa inicial.
+          </div>
         </div>
 
-        <!-- INSIGHTS -->
+        <!-- INSIGHTS CHAVE -->
         <div class="section">
           <h2 id="section-title-3">Insights Chave</h2>
-          <div class="insight warning">
-            <strong>GARGALO:</strong> Apenas <strong>37.5%</strong> das aprovadas em M/F avançam para Jurídica.
-          </div>
-          <div class="insight success">
-            <strong>SUCESSO:</strong> 100% de conversão M/F → Jurídica em 30/10 (3/3).
-          </div>
-          <div class="insight success">
-            <strong>MARCO:</strong> Primeira aprovação em Viabilidade Total (30/10).
-          </div>
+          <div class="insight warning"><strong>GARGALO:</strong> Apenas <strong>27.3%</strong> das adicionadas avançam para M/F.</div>
+          <div class="insight success"><strong>SUCESSO:</strong> 100% de conversão M/F → Jurídica (3/3).</div>
+          <div class="insight success"><strong>MARCO:</strong> Aprovação em Viabilidade Total mantida.</div>
         </div>
       </div>
 
-      <!-- COLUNA DIREITA -->
       <div class="right">
-        <!-- RANKING INDIVIDUAL -->
+        <!-- RANKING -->
         <div class="section">
           <h2 id="section-title-4">B. Produção Individual (Visão por Prestador)</h2>
           <table>
             <thead><tr><th>Nome</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th><th>Sucesso</th></tr></thead>
             <tbody>
-              <tr style="background:#ecfdf5"><td><strong>1. Luca Shoji Alves</strong></td><td>4</td><td>13</td><td>5</td><td>0.0%</td></tr>
-              <tr style="background:#f0fdf4"><td><strong>2. Angelo Raphael</strong></td><td>12</td><td>7</td><td>0</td><td>0.0%</td></tr>
-              <tr style="background:#ecfdf5"><td><strong>3. Clayton da Silva</strong></td><td>7</td><td>8</td><td>2</td><td>0.0%</td></tr>
-              <tr><td>Izabele Habeite</td><td>0</td><td>3</td><td>2</td><td>0.0%</td></tr>
-              <tr><td>Tarley De Souza</td><td>3</td><td>5</td><td>3</td><td>0.0%</td></tr>
+              <tr style="background:#ecfdf5"><td><strong>1. Angelo Raphael</strong></td><td>6</td><td>3</td><td>0</td><td>0.0%</td></tr>
+              <tr style="background:#f0fdf4"><td><strong>2. Clayton da Silva</strong></td><td>0</td><td>0</td><td>0</td><td>0.0%</td></tr>
+              <tr style="background:#ecfdf5"><td><strong>3. Ailton dos Anjos Menezes</strong></td><td>5</td><td>2</td><td>4</td><td>0.0%</td></tr>
+              <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>0</td><td>0.0%</td></tr>
+              <tr><td>Tarley De Souza</td><td>0</td><td>0</td><td>0</td><td>0.0%</td></tr>
             </tbody>
           </table>
           <canvas id="rankingChart" class="ranking-chart"></canvas>
@@ -266,11 +206,11 @@
           <table style="font-size:0.84em;">
             <thead><tr><th>Nome</th><th>Adic.</th><th>M/F</th><th>Jur.</th><th>Viab.</th><th>Rep. M/F</th><th>Rep. Jur.</th></tr></thead>
             <tbody>
-              <tr><td>Luca Shoji Alves</td><td>4</td><td>9</td><td>0</td><td>0</td><td>5</td><td>0</td></tr>
-              <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>2</td></tr>
-              <tr><td>Clayton da Silva</td><td>7</td><td>1</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>
-              <tr><td>Angelo Raphael</td><td>12</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>Tarley De Souza</td><td>3</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td></tr>
+              <tr><td>Ailton dos Anjos Menezes</td><td>5</td><td>2</td><td>0</td><td>0</td><td>4</td><td>0</td></tr>
+              <tr><td>Angelo Raphael</td><td>6</td><td>1</td><td>3</td><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>Clayton da Silva</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>Tarley De Souza</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
             </tbody>
           </table>
         </div>
@@ -283,60 +223,35 @@
   </div>
 
   <script>
-    // === EXTRAIR COR DA LOGO E APLICAR NOS TÍTULOS ===
     const logo = document.getElementById('logo');
-    const titles = [
-      document.getElementById('main-title'),
-      ...document.querySelectorAll('h2')
-    ];
-
-    logo.onload = function() {
+    const titles = [document.getElementById('main-title'), ...document.querySelectorAll('h2')];
+    logo.onload = () => {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      canvas.width = logo.width;
-      canvas.height = logo.height;
+      canvas.width = logo.width; canvas.height = logo.height;
       ctx.drawImage(logo, 0, 0);
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
       let r = 0, g = 0, b = 0, count = 0;
-
-      // Amostra de pixels (evita fundo branco)
       for (let i = 0; i < data.length; i += 40) {
-        const alpha = data[i + 3];
-        if (alpha > 100) {
-          r += data[i];
-          g += data[i + 1];
-          b += data[i + 2];
-          count++;
-        }
+        if (data[i + 3] > 100) { r += data[i]; g += data[i + 1]; b += data[i + 2]; count++; }
       }
-
-      if (count > 0) {
-        r = Math.floor(r / count);
-        g = Math.floor(g / count);
-        b = Math.floor(b / count);
-        const color = `rgb(${r}, ${g}, ${b})`;
+      if (count) {
+        const color = `rgb(${Math.floor(r/count)}, ${Math.floor(g/count)}, ${Math.floor(b/count)})`;
         titles.forEach(t => t.style.color = color);
       }
     };
 
-    // Gráfico de Ranking
     new Chart(document.getElementById('rankingChart'), {
       type: 'bar',
       data: {
-        labels: ['Luca', 'Angelo', 'Clayton', 'Izabele', 'Tarley'],
+        labels: ['Angelo', 'Clayton', 'Ailton', 'Izabele', 'Tarley'],
         datasets: [
-          { label: 'Adicionadas', data: [4, 12, 7, 0, 3], backgroundColor: '#3b82f6' },
-          { label: 'Aprovadas', data: [13, 7, 8, 3, 5], backgroundColor: '#10b981' },
-          { label: 'Perdas', data: [5, 0, 2, 2, 3], backgroundColor: '#ef4444' }
+          { label: 'Adicionadas', data: [6, 0, 5, 0, 0], backgroundColor: '#3b82f6' },
+          { label: 'Aprovadas', data: [3, 0, 2, 0, 0], backgroundColor: '#10b981' },
+          { label: 'Perdas', data: [0, 0, 4, 0, 0], backgroundColor: '#ef4444' }
         ]
       },
-      options: {
-        responsive: true,
-        plugins: { legend: { position: 'top' } },
-        scales: { y: { beginAtZero: true } }
-      }
+      options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
     });
   </script>
 </body>
