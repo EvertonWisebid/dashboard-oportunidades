@@ -7,84 +7,105 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
-      --bg: #f9fafb; --card: #ffffff; --border: #e5e7eb727;
-      --text: #1f2937; --gray: #6b7280; --primary: #1e40af;
-      --success: #15803d; --warning: #ca8a04; --danger: #b91c1c;
+      --bg: #f9fafb; --card: #ffffff; --border: #e5e7eb;
+      --text: #1f2937; --gray: #6b7280;
+      --funnel-1: #22c55e; --funnel-2: #3b82f6; --funnel-3: #f59e0b; --funnel-4: #94a3b8; --funnel-5: #ef4444;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg); color: var(--text); line-height: 1.6;
-      padding: 20px; height: 100vh; overflow: hidden;
+      padding: 15px; height: 100vh; overflow: hidden;
     }
     .container { max-width: 1900px; margin: auto; }
-    
+
     /* CABEÇALHO */
     .header {
-      text-align: center; margin-bottom: 25px; border-bottom: 2px solid #e5e7eb; padding-bottom: 15px;
+      display: flex; align-items: center; margin-bottom: 18px; border-bottom: 2px solid var(--border); padding-bottom: 10px;
     }
-    .logo { max-width: 160px; height: auto; margin-bottom: 10px; }
-    .title { font-size: 2.1em; font-weight: 600; color: var(--primary); }
-    .subtitle { font-size: 1.1em; color: var(--gray); margin: 8px 0; }
-    
+    .logo {
+      max-width: 140px; height: auto; margin-right: 20px;
+    }
+    .title-block { flex: 1; }
+    .title {
+      font-size: 1.85em; font-weight: 600;
+      /* COR EXTRAÍDA DA LOGO: será aplicada via JS abaixo */
+    }
+    .subtitle { font-size: 1.05em; color: var(--gray); margin-top: 4px; }
+
     /* GRID PRINCIPAL */
     .grid { 
       display: grid; 
-      grid-template-columns: 1.2fr 1fr; 
-      gap: 20px; 
-      height: calc(100vh - 180px);
+      grid-template-columns: 1.35fr 1fr; 
+      gap: 18px; 
+      height: calc(100vh - 155px);
     }
-    .left, .right { overflow-y: auto; padding-right: 10px; }
-    .left::-webkit-scrollbar, .right::-webkit-scrollbar { width: 6px; }
-    .left::-webkit-scrollbar-track, .right::-webkit-scrollbar-track { background: #f1f5f9; }
+    .left, .right { overflow-y: auto; padding-right: 8px; }
+    .left::-webkit-scrollbar, .right::-webkit-scrollbar { width: 5px; }
     .left::-webkit-scrollbar-thumb, .right::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
     /* SEÇÕES */
     .section {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 16px; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     .section h2 {
-      font-size: 1.4em; color: var(--primary); margin-bottom: 12px; font-weight: 600;
-      border-bottom: 1px solid #e5e7eb; padding-bottom: 6px;
+      font-size: 1.3em; margin-bottom: 10px; font-weight: 600;
+      border-bottom: 1px solid var(--border); padding-bottom: 5px;
+      /* COR DO TÍTULO = COR DA LOGO */
     }
 
     /* TABELAS */
     table {
-      width: 100%; border-collapse: collapse; font-size: 0.92em; margin: 12px 0;
+      width: 100%; border-collapse: collapse; font-size: 0.9em; margin: 10px 0;
     }
     th, td {
-      padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb;
+      padding: 9px 11px; text-align: left; border-bottom: 1px solid var(--border);
     }
     th {
-      background: #f8fafc; font-weight: 600; color: var(--primary); font-size: 0.9em;
+      background: #f8fafc; font-weight: 600; font-size: 0.88em;
     }
     tr:hover { background: #f8fafc; }
 
-    /* FUNIL GRÁFICO */
-    .funnel-chart { height: 320px; margin: 15px 0; }
+    /* FUNIL REAL (COMO NO PDF) */
+    .funnel-container {
+      display: flex; flex-direction: column; align-items: center; margin: 18px 0;
+    }
+    .funnel-stage {
+      width: 100%; text-align: center; color: white; font-weight: bold;
+      padding: 14px 0; margin: 3px 0; position: relative; overflow: hidden;
+      clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+      font-size: 1.1em;
+    }
+    .funnel-stage::before {
+      content: attr(data-label); position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      font-size: 0.9em; font-weight: normal; opacity: 0.9;
+    }
+    .funnel-stage::after {
+      content: attr(data-percent); position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+      font-size: 0.9em; opacity: 0.9;
+    }
+    .stage-1 { background: var(--funnel-1); width: 100%; }
+    .stage-2 { background: var(--funnel-2); width: 80%; }
+    .stage-3 { background: var(--funnel-3); width: 60%; }
+    .stage-4 { background: var(--funnel-4); width: 40%; }
+    .stage-5 { background: var(--funnel-5); width: 25%; }
 
     /* INSIGHTS */
     .insight {
-      padding: 14px; border-radius: 10px; margin: 15px 0; font-size: 0.95em;
-      border-left: 5px solid;
+      padding: 12px; border-radius: 8px; margin: 12px 0; font-size: 0.92em;
+      border-left: 4px solid;
     }
-    .insight.success { background: #f0fdf4; border-color: var(--success); color: #166534; }
-    .insight.warning { background: #fffbeb; border-color: var(--warning); color: #92400e; }
-    .insight.danger { background: #fef2f2; border-color: var(--danger); color: #991b1b; }
+    .insight.warning { background: #fffbeb; border-color: #ca8a04; color: #92400e; }
+    .insight.success { background: #f0fdf4; border-color: #15803d; color: #166534; }
 
     /* GRÁFICO RANKING */
-    .ranking-chart { height: 300px; margin: 15px 0; }
+    .ranking-chart { height: 260px; margin: 12px 0; }
 
     /* RODAPÉ */
     .footer {
-      text-align: center; font-size: 0.8em; color: var(--gray); margin-top: 20px;
-      border-top: 1px solid #e5e7eb; padding-top: 10px;
-    }
-
-    @media (max-width: 1400px) {
-      .grid { grid-template-columns: 1fr; }
-      .left, .right { overflow-y: visible; }
+      text-align: center; font-size: 0.78em; color: var(--gray); margin-top: 15px;
+      border-top: 1px solid var(--border); padding-top: 8px;
     }
   </style>
 </head>
@@ -92,9 +113,11 @@
   <div class="container">
     <!-- CABEÇALHO -->
     <div class="header">
-      <img src="logo.png" alt="Logo" class="logo">
-      <div class="title">Relatório de Desempenho de Produção de Oportunidades</div>
-      <div class="subtitle">29 e 30/10/2025</div>
+      <img src="logo.png" alt="Logo" class="logo" id="logo">
+      <div class="title-block">
+        <div class="title" id="main-title">Relatório de Desempenho de Produção de Oportunidades</div>
+        <div class="subtitle">29 e 30 de Outubro de 2025</div>
+      </div>
     </div>
 
     <div class="grid">
@@ -102,9 +125,9 @@
       <div class="left">
         <!-- FUNIL DE APROVAÇÃO -->
         <div class="section">
-          <h2>A. Produção Coletiva (Visão Macro)</h2>
+          <h2 id="section-title-1">A. Produção Coletiva (Visão Macro)</h2>
           <table>
-            <thead><tr><th>Etapa</th><th>Total</th><th>Conv. Anterior (%)</th><th>Conv. Total (%)</th></tr></thead>
+            <thead><tr><th>Etapa</th><th>Total</th><th>Conv. Anterior</th><th>Conv. Total</th></tr></thead>
             <tbody>
               <tr><td>Adicionadas</td><td>31</td><td>N/A</td><td>100.0%</td></tr>
               <tr><td>Aprovadas em Análise M/F</td><td>16</td><td>51.6%</td><td>51.6%</td></tr>
@@ -113,12 +136,20 @@
               <tr><td>Aprovadas em Viabilidade Total</td><td>1</td><td>—</td><td>3.2%</td></tr>
             </tbody>
           </table>
-          <canvas id="funnelChart" class="funnel-chart"></canvas>
+
+          <!-- FUNIL VISUAL (COMO NO PDF) -->
+          <div class="funnel-container">
+            <div class="funnel-stage stage-1" data-label="Adicionadas" data-percent="Total: 31 | 100.0%">31</div>
+            <div class="funnel-stage stage-2" data-label="Aprov. M/F" data-percent="Total: 16 | 51.6%">16</div>
+            <div class="funnel-stage stage-3" data-label="Aprov. Jurídica" data-percent="Total: 6 | 37.5%">6</div>
+            <div class="funnel-stage stage-4" data-label="Validação" data-percent="Total: 0 | 0.0%">0</div>
+            <div class="funnel-stage stage-5" data-label="Viab. Total" data-percent="Total: 1 | 3.2%">1</div>
+          </div>
         </div>
 
         <!-- FUNIL DE PERDAS -->
         <div class="section">
-          <h2>Funil de Perdas (Causas Raiz)</h2>
+          <h2 id="section-title-2">Funil de Perdas (Causas Raiz)</h2>
           <table>
             <thead><tr><th>Etapa</th><th>Total</th></tr></thead>
             <tbody>
@@ -133,7 +164,7 @@
 
         <!-- INSIGHTS -->
         <div class="section">
-          <h2>C. Insights e Recomendações</h2>
+          <h2 id="section-title-3">Insights Chave</h2>
           <div class="insight warning">
             <strong>GARGALO:</strong> Apenas <strong>37.5%</strong> das aprovadas em M/F avançam para Jurídica.
           </div>
@@ -150,7 +181,7 @@
       <div class="right">
         <!-- RANKING INDIVIDUAL -->
         <div class="section">
-          <h2>B. Produção Individual (Visão por Prestador)</h2>
+          <h2 id="section-title-4">B. Produção Individual (Visão por Prestador)</h2>
           <table>
             <thead><tr><th>Nome</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th><th>Sucesso</th></tr></thead>
             <tbody>
@@ -166,15 +197,15 @@
 
         <!-- ANEXOS -->
         <div class="section">
-          <h2>Anexos - Desempenho Detalhado</h2>
-          <table style="font-size:0.85em;">
-            <thead><tr><th>Nome</th><th>Adic.</th><th>M/F</th><th>Jur.</th><th>Val.</th><th>Viab.</th><th>Rep. M/F</th><th>Rep. Jur.</th></tr></thead>
+          <h2 id="section-title-5">Anexos - Desempenho Detalhado</h2>
+          <table style="font-size:0.84em;">
+            <thead><tr><th>Nome</th><th>Adic.</th><th>M/F</th><th>Jur.</th><th>Viab.</th><th>Rep. M/F</th><th>Rep. Jur.</th></tr></thead>
             <tbody>
-              <tr><td>Luca Shoji Alves</td><td>4</td><td>9</td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td></tr>
-              <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>2</td></tr>
-              <tr><td>Clayton da Silva</td><td>7</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>
-              <tr><td>Angelo Raphael</td><td>12</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>Tarley De Souza</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td></tr>
+              <tr><td>Luca Shoji Alves</td><td>4</td><td>9</td><td>0</td><td>0</td><td>5</td><td>0</td></tr>
+              <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>2</td></tr>
+              <tr><td>Clayton da Silva</td><td>7</td><td>1</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>
+              <tr><td>Angelo Raphael</td><td>12</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>Tarley De Souza</td><td>3</td><td>3</td><td>0</td><td>0</td><td>3</td><td>0</td></tr>
             </tbody>
           </table>
         </div>
@@ -182,25 +213,50 @@
     </div>
 
     <div class="footer">
-      Dashboard gerado por <strong>Éverton Rodrigues | Atualizado em 31/10/2025
+      Dashboard gerado via GitHub Pages | Atualizado em 31/10/2025
     </div>
   </div>
 
   <script>
-    // Funil de Aprovação
-    new Chart(document.getElementById('funnelChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Adicionadas', 'Aprov. M/F', 'Aprov. Jurídica', 'Validação', 'Viab. Total'],
-        datasets: [{ label: 'Volume', data: [31, 16, 6, 0, 1], backgroundColor: ['#22c55e', '#3b82f6', '#f59e0b', '#94a3b8', '#ef4444'] }]
-      },
-      options: {
-        indexAxis: 'y', responsive: true, plugins: { legend: { display: false } },
-        scales: { x: { beginAtZero: true, max: 35 } }
-      }
-    });
+    // === EXTRAIR COR DA LOGO E APLICAR NOS TÍTULOS ===
+    const logo = document.getElementById('logo');
+    const titles = [
+      document.getElementById('main-title'),
+      ...document.querySelectorAll('h2')
+    ];
 
-    // Ranking Individual
+    logo.onload = function() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = logo.width;
+      canvas.height = logo.height;
+      ctx.drawImage(logo, 0, 0);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      let r = 0, g = 0, b = 0, count = 0;
+
+      // Amostra de pixels (evita fundo branco)
+      for (let i = 0; i < data.length; i += 40) {
+        const alpha = data[i + 3];
+        if (alpha > 100) {
+          r += data[i];
+          g += data[i + 1];
+          b += data[i + 2];
+          count++;
+        }
+      }
+
+      if (count > 0) {
+        r = Math.floor(r / count);
+        g = Math.floor(g / count);
+        b = Math.floor(b / count);
+        const color = `rgb(${r}, ${g}, ${b})`;
+        titles.forEach(t => t.style.color = color);
+      }
+    };
+
+    // Gráfico de Ranking
     new Chart(document.getElementById('rankingChart'), {
       type: 'bar',
       data: {
