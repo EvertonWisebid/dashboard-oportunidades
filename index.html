@@ -124,28 +124,79 @@
       <!-- COLUNA ESQUERDA -->
       <div class="left">
         <!-- FUNIL DE APROVAÇÃO -->
-        <div class="section">
-          <h2 id="section-title-1">A. Produção Coletiva (Visão Macro)</h2>
-          <table>
-            <thead><tr><th>Etapa</th><th>Total</th><th>Conv. Anterior</th><th>Conv. Total</th></tr></thead>
-            <tbody>
-              <tr><td>Adicionadas</td><td>31</td><td>N/A</td><td>100.0%</td></tr>
-              <tr><td>Aprovadas em Análise M/F</td><td>16</td><td>51.6%</td><td>51.6%</td></tr>
-              <tr><td>Aprovadas em Análise Jurídica</td><td>6</td><td>37.5%</td><td>19.4%</td></tr>
-              <tr><td>Aprovadas em Validação Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
-              <tr><td>Aprovadas em Viabilidade Total</td><td>1</td><td>—</td><td>3.2%</td></tr>
-            </tbody>
-          </table>
+        <!-- FUNIL DE APROVAÇÃO (100% IDÊNTICO AO PDF) -->
+<div class="section">
+  <h2 id="section-title-1">A. Produção Coletiva (Visão Macro)</h2>
+  
+  <!-- TABELA DE VOLUME E TAXAS -->
+  <table>
+    <thead><tr><th>Etapa</th><th>Total (Volume)</th><th>Conversão da Etapa Anterior (%)</th><th>Conversão Total (%)</th></tr></thead>
+    <tbody>
+      <tr><td>Adicionadas</td><td>31</td><td>N/A</td><td>100.0%</td></tr>
+      <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>16</td><td>51.6%</td><td>51.6%</td></tr>
+      <tr><td>Aprovadas em Análise Jurídica</td><td>6</td><td>37.5%</td><td>19.4%</td></tr>
+      <tr><td>Aprovadas em Validação Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
+      <tr><td>Aprovadas em Viabilidade Total</td><td>1</td><td>—</td><td>3.2%</td></tr>
+    </tbody>
+  </table>
 
-          <!-- FUNIL VISUAL (COMO NO PDF) -->
-          <div class="funnel-container">
-            <div class="funnel-stage stage-1" data-label="Adicionadas" data-percent="Total: 31 | 100.0%">31</div>
-            <div class="funnel-stage stage-2" data-label="Aprov. M/F" data-percent="Total: 16 | 51.6%">16</div>
-            <div class="funnel-stage stage-3" data-label="Aprov. Jurídica" data-percent="Total: 6 | 37.5%">6</div>
-            <div class="funnel-stage stage-4" data-label="Validação" data-percent="Total: 0 | 0.0%">0</div>
-            <div class="funnel-stage stage-5" data-label="Viab. Total" data-percent="Total: 1 | 3.2%">1</div>
-          </div>
-        </div>
+  <!-- FUNIL VISUAL (TRAPÉZIO COM TEXTO LATERAL) -->
+  <div style="margin: 30px 0; text-align: center;">
+    <div style="display: inline-block; font-weight: bold; margin-bottom: 10px;">Funil de Aprovação Coletivo (Volume e Taxas de Conversão)</div>
+    
+    <div style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
+      <!-- ETAPA 1: Adicionadas -->
+      <div style="background: #22c55e; color: white; padding: 18px 0; margin: 0 auto 8px; width: 100%; border-radius: 8px 8px 0 0; position: relative;">
+        <span style="position: absolute; left: 20px; font-size: 0.95em; opacity: 0.9;">Adicionadas</span>
+        <span style="font-size: 2.2em; font-weight: bold;">31</span>
+        <span style="position: absolute; right: 20px; font-size: 0.9em; opacity: 0.9;">
+          Total: 100.0%<br>Etapa: N/A
+        </span>
+      </div>
+
+      <!-- ETAPA 2: M/F -->
+      <div style="background: #3b82f6; color: white; padding: 16px 0; margin: 0 auto 8px; width: 85%; clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);">
+        <span style="position: absolute; left: 25px; font-size: 0.95em; opacity: 0.9; margin-top: -8px;">Aprovadas em Análise Mercadológica/Financeira</span>
+        <span style="font-size: 2em; font-weight: bold;">16</span>
+        <span style="position: absolute; right: 25px; font-size: 0.85em; opacity: 0.9; margin-top: -8px;">
+          Total: 51.6%<br>Etapa: 51.6%
+        </span>
+      </div>
+
+      <!-- ETAPA 3: Jurídica -->
+      <div style="background: #f59e0b; color: white; padding: 14px 0; margin: 0 auto 8px; width: 65%; clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);">
+        <span style="position: absolute; left: 25px; font-size: 0.9em; opacity: 0.9; margin-top: -6px;">Aprovadas em Análise Jurídica</span>
+        <span style="font-size: 1.8em; font-weight: bold;">6</span>
+        <span style="position: absolute; right: 25px; font-size: 0.8em; opacity: 0.9; margin-top: -6px;">
+          Total: 19.4%<br>Etapa: 37.5%
+        </span>
+      </div>
+
+      <!-- ETAPA 4: Validação -->
+      <div style="background: #94a3b8; color: white; padding: 12px 0; margin: 0 auto 8px; width: 45%; clip-path: polygon(22% 0%, 78% 0%, 100% 100%, 0% 100%);">
+        <span style="position: absolute; left: 20px; font-size: 0.85em; opacity: 0.9; margin-top: -4px;">Aprovadas em Validação Jurídica</span>
+        <span style="font-size: 1.6em; font-weight: bold;">0</span>
+        <span style="position: absolute; right: 20px; font-size: 0.75em; opacity: 0.9; margin-top: -4px;">
+          Total: 0.0%<br>Etapa: 0.0%
+        </span>
+      </div>
+
+      <!-- ETAPA 5: Viabilidade Total -->
+      <div style="background: #16a34a; color: white; padding: 12px 0; margin: 0 auto; width: 30%; border-radius: 0 0 8px 8px; clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);">
+        <span style="position: absolute; left: 15px; font-size: 0.8em; opacity: 0.9; margin-top: -2px;">Aprovadas em Viabilidade Total</span>
+        <span style="font-size: 1.5em; font-weight: bold;">1</span>
+        <span style="position: absolute; right: 15px; font-size: 0.7em; opacity: 0.9; margin-top: -2px;">
+          Total: 3.2%<br>Etapa: —
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHT CHAVE -->
+  <div class="insight warning" style="margin-top: 20px;">
+    <strong>Insight Chave:</strong> O principal gargalo no funil de aprovação se concentra na primeira transição: de <strong>Adicionadas (31)</strong> para <strong>Aprovadas em Análise Mercadológica/Financeira (16)</strong>, com uma taxa de conversão de apenas <strong>51.6%</strong>. Isso sugere que a maioria dos ativos adicionados não atende aos critérios iniciais de mercado/financeiros.
+  </div>
+</div>
 
         <!-- FUNIL DE PERDAS -->
         <div class="section">
