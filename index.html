@@ -57,7 +57,7 @@
       display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 15px 0;
     }
 
-    .line-chart { height: 120px; margin: 12px 0; }
+    .bar-chart { height: 140px; margin: 12px 0; }
 
     .ranking-chart { height: 260px; margin: 12px 0; }
 
@@ -132,10 +132,10 @@
           </div>
         </div>
 
-        <!-- GRÁFICO DE LINHA: EVOLUÇÃO POR ETAPA -->
+        <!-- GRÁFICO DE BARRAS HORIZONTAIS: EVOLUÇÃO POR ETAPA -->
         <div class="section">
           <h2>Evolução do Volume por Etapa (29/10 → 03/11)</h2>
-          <canvas id="lineChart" class="line-chart"></canvas>
+          <canvas id="barChart" class="bar-chart"></canvas>
         </div>
       </div>
 
@@ -196,53 +196,44 @@
       }
     };
 
-    // GRÁFICO DE LINHA: EVOLUÇÃO POR ETAPA
-    new Chart(document.getElementById('lineChart'), {
-      type: 'line',
+    // GRÁFICO DE BARRAS HORIZONTAIS: EVOLUÇÃO POR ETAPA
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
       data: {
-        labels: ['29/10', '30/10', '03/11'],
+        labels: ['Adicionadas', 'M/F', 'Jurídica'],
         datasets: [
           {
-            label: 'Adicionadas',
-            data: [20, 11, 19],
-            borderColor: '#22c55e',
-            backgroundColor: 'rgba(34,197,94,0.1)',
-            tension: 0.3,
-            pointRadius: 5,
-            fill: false
+            label: '29/10',
+            data: [20, 13, 3],
+            backgroundColor: '#22c55e'
           },
           {
-            label: 'M/F',
-            data: [13, 3, 4],
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59,130,246,0.1)',
-            tension: 0.3,
-            pointRadius: 5,
-            fill: false
+            label: '30/10',
+            data: [11, 3, 3],
+            backgroundColor: '#3b82f6'
           },
           {
-            label: 'Jurídica',
-            data: [3, 3, 0],
-            borderColor: '#f59e0b',
-            backgroundColor: 'rgba(245,158,11,0.1)',
-            tension: 0.3,
-            pointRadius: 5,
-            fill: false
+            label: '03/11',
+            data: [19, 4, 0],
+            backgroundColor: '#f59e0b'
           }
         ]
       },
       options: {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
+        plugins: {
+          legend: { position: 'top', labels: { font: { size: 11 } } }
+        },
         scales: {
-          y: { beginAtZero: true, max: 22, ticks: { stepSize: 5 } },
-          x: { ticks: { font: { size: 11 } } }
+          x: { beginAtZero: true, max: 22, ticks: { stepSize: 5, font: { size: 10 } } },
+          y: { ticks: { font: { size: 11 } } }
         }
       }
     });
 
-    // GRÁFICO DE BARRAS: RANKING DO DIA
+    // GRÁFICO DE BARRAS VERTICAIS: RANKING DO DIA
     new Chart(document.getElementById('rankingChart'), {
       type: 'bar',
       data: {
