@@ -127,25 +127,25 @@
               <div class="funnel-rate">(100.0%)</div>
             </div>
 
-            <div style="background: var(--funnel-2); color: white; padding: 9px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(59,130,246,0.3);">
+            <div style="background: var(--funnel-2); color: white; padding: 9px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(59,130,246,0.3);">
               <div class="funnel-label">Aprovadas em Análise<br>Mercadológica/Financeira</div>
               <div style="font-size: 2.1em; font-weight: bold;">3</div>
               <div class="funnel-rate">(15.0%)</div>
             </div>
 
-            <div style="background: var(--funnel-3); color: white; padding: 8px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(245,158,11,0.3);">
+            <div style="background: var(--funnel-3); color: white; padding: 8px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(245,158,11,0.3);">
               <div class="funnel-label">Aprovadas em<br>Análise Jurídica</div>
               <div style="font-size: 1.9em; font-weight: bold;">0</div>
               <div class="funnel-rate">(0.0%)</div>
             </div>
 
-            <div style="background: var(--funnel-4); color: white; padding: 7px 35px; width: 42%; text-align: center; position: relative; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(148,163,184,0.3);">
+            <div style="background: var(--funnel-4); color: white; padding: 7px 35px; width: 42%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(148,163,184,0.3);">
               <div class="funnel-label">Aprovadas em<br>Validação Jurídica</div>
               <div style="font-size: 1.7em; font-weight: bold;">0</div>
               <div class="funnel-rate">(0.0%)</div>
             </div>
 
-            <div style="background: var(--funnel-5); color: white; padding: 7px 30px; width: 30%; text-align: center; position: relative; border-radius: 0 0 10px 10px; clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(22,163,74,0.3);">
+            <div style="background: var(--funnel-5); color: white; padding: 7px 30px; width: 30%; text-align: center; position: relative; border-radius: 0 0 10px 10px; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(22,163,74,0.3);">
               <div class="funnel-label">Viabilidade Total</div>
               <div style="font-size: 1.6em; font-weight: bold;">0</div>
               <div class="funnel-rate">(0.0%)</div>
@@ -188,7 +188,7 @@
 
       <!-- COLUNA DIREITA -->
       <div class="right">
-        <!-- RANKING INDIVIDUAL (DIA 05/11) - ORDENADO POR APROV. -->
+        <!-- RANKING INDIVIDUAL (DIA 05/11) -->
         <div class="section">
           <h2>B. Produção Individual (Visão por Prestador)</h2>
           <table>
@@ -203,7 +203,7 @@
           <canvas id="rankingChart" class="ranking-chart"></canvas>
         </div>
 
-        <!-- PRODUÇÃO INDIVIDUAL CONSOLIDADA (29/10 → 05/11) -->
+        <!-- PRODUÇÃO INDIVIDUAL CONSOLIDADA -->
         <div class="section">
           <h2>Produção Individual (Visão por Prestador) - 29/10 a 05/11/2025</h2>
           <table style="font-size:0.84em;">
@@ -228,7 +228,7 @@
     const logo = document.getElementById('logo');
     const titles = [document.getElementById('main-title'), ...document.querySelectorAll('h2')];
     logo.onload = () => {
-      const canvas = document createElement('canvas');
+      const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = logo.width; canvas.height = logo.height;
       ctx.drawImage(logo, 0, 0);
