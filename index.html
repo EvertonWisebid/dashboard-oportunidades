@@ -1,58 +1,259 @@
-[LOGO]  Relatório de Desempenho de Produção de Oportunidades
-        07 de Novembro de 2025
-──────────────────────────────────────────────────────────────────────
-┌───────────────────────────────────────────────┐  ┌──────────────────────┐
-│ A. Produção Coletiva (Visão Macro)            │  │ B. Produção Individual│
-│                                               │  │ 1. Ailton dos Anjos   │
-│ ┌───────────────────────────────────────────┐ │  │ 2. Angelo Raphael     │
-│ │ Etapa               │ Vol. │ Conv. Ant. │ │  │ 3. Tarly De Souza     │
-│ │                     │      │ (%) | Tot.(%)│ │  │                       │
-│ │ Adicionadas         │   6  │  N/A  │ 100.0% │ │  │ [BARRA GRÁFICO]       │
-│ │ M/F                 │   2  │ 33.3% │ 33.3%  │ │  └──────────────────────┘
-│ │ Jurídica            │   0  │  0.0% │  0.0%  │ │
-│ │ Validação           │   0  │  0.0% │  0.0%  │ │
-│ │ Viab. Total         │   0  │  0.0% │  0.0%  │ │
-│ └───────────────────────────────────────────┘ │
-│                                               │
-│        Funil de Aprovação Coletivo (Volume e Taxas de Conversão)   │
-│
-│           ┌───────────────────────────────────────┐
-│           │           Adicionadas                 │
-│           │                  6                    │
-│           │               (100.0%)                │
-│           └───────────────────────────────────────┘
-│
-│                   ┌─────────────────────────────┐
-│                   │ Aprovadas em Análise        │
-│                   │ Mercadológica/Financeira    │
-│                   │               2             │
-│                   │            (33.3%)          │
-│                   └─────────────────────────────┘
-│
-│                         ┌─────────────────────┐
-│                         │ Aprovadas em        │
-│                         │ Análise Jurídica    │
-│                         │         0           │
-│                         │       (0.0%)        │
-│                         └─────────────────────┘
-│
-│                              ┌──────────────┐
-│                              │ Validação     │
-│                              │     0         │
-│                              │   (0.0%)      │
-│                              └──────────────┘
-│
-│                                   ┌──────┐
-│                                   │  0   │
-│                                   │ Viab. Total │
-│                                   │ (0.0%)   │
-│                                   └───┘
-│
-│ Mini Gráfico de Barras (Volume por Etapa - 07/11) │
-│                                               │
-│ Adicionadas     ██████  6                         │
-│ M/F             ██  2                           │
-│ Jurídica        (nenhum)                      │
-│ Validação       (nenhum)                      │
-│ Viab. Total     (nenhum)                      │
-└───────────────────────────────────────────────┘
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Relatório Produção - 07/11/2025</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #f9fafb; --card: #ffffff; --border: #e5e7eb;
+      --text: #1f2937; --gray: #6b7280;
+      --funnel-1: #22c55e; --funnel-2: #3b82f6; --funnel-3: #f59e0b; --funnel-4: #94a3b8; --funnel-5: #16a34a;
+      --bar-fill: #3b82f6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6;
+      padding: 15px; height: 100vh; overflow: hidden;
+    }
+    .container { max-width: 1900px; margin: auto; }
+
+    .header {
+      display: flex; align-items: center; margin-bottom: 18px; border-bottom: 2px solid var(--border); padding-bottom: 10px;
+    }
+    .logo { max-width: 140px; height: auto; margin-right: 20px; }
+    .title { font-size: 1.85em; font-weight: 600; }
+    .subtitle { font-size: 1.05em; color: var(--gray); margin-top: 4px; }
+
+    .grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; height: calc(100vh - 155px); }
+    .left, .right { overflow-y: auto; padding-right: 8px; }
+    .left::-webkit-scrollbar, .right::-webkit-scrollbar { width: 5px; }
+    .left::-webkit-scrollbar-thumb, .right::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    .section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .section h2 {
+      font-size: 1.3em; margin-bottom: 10px; font-weight: 600;
+      border-bottom: 1px solid var(--border); padding-bottom: 5px;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; font-size: 0.9em; margin: 10px 0;
+    }
+    th, td {
+      padding: 9px 11px; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: #f8fafc; font-weight: 600; font-size: 0.88em;
+    }
+
+    .funnel-title {
+      text-align: center; font-weight: bold; margin: 20px 0 10px; font-size: 1.15em;
+    }
+    .funnel-container {
+      display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 15px 0;
+    }
+    .funnel-label {
+      position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 0.82em; font-weight: 600; width: 36%; text-align: left; line-height: 1.2; color: white;
+    }
+    .funnel-rate {
+      position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 0.9em; font-weight: bold; color: white;
+    }
+
+    .mini-bar-container {
+      margin-top: 12px;
+    }
+    .mini-bar-item {
+      display: flex; align-items: center; margin-bottom: 8px; font-size: 0.88em;
+    }
+    .mini-bar-label {
+      width: 160px; font-weight: 600; color: var(--gray);
+    }
+    .mini-bar {
+      flex: 1; height: 18px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin: 0 8px;
+    }
+    .mini-bar-fill {
+      height: 100%; background: var(--bar-fill); transition: width 0.3s ease;
+    }
+    .mini-bar-value {
+      width: 40px; text-align: right; font-weight: bold; color: var(--text);
+    }
+
+    .ranking-chart { height: 260px; margin: 12px 0; }
+
+    .footer {
+      text-align: center; font-size: 0.78em; color: var(--gray); margin-top: 15px;
+      border-top: 1px solid var(--border); padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="logo.png" alt="Logo" class="logo" id="logo">
+      <div class="title-block">
+        <div class  class="title" id="main-title">Relatório de Desempenho de Produção de Oportunidades</div>
+        <div class="subtitle">07 de Novembro de 2025</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left">
+        <!-- PRODUÇÃO COLETIVA (DIA 07/11) -->
+        <div class="section">
+          <h2>A. Produção Coletiva (Visão Macro)</h2>
+          
+          <table>
+            <thead><tr><th>Etapa</th><th>Total (Volume)</th><th>Conversão da Etapa Anterior (%)</th><th>Conversão Total (%)</th></tr></thead>
+            <tbody>
+              <tr><td>Adicionadas</td><td>6</td><td>N/A</td><td>100.0%</td></tr>
+              <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>2</td><td>33.3%</td><td>33.3%</td></tr>
+              <tr><td>Aprovadas em Análise Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
+              <tr><td>Aprovadas em Validação Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
+              <tr><td>Aprovadas em Viabilidade Total</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
+            </tbody>
+          </table>
+
+          <div class="funnel-title">Funil de Aprovação Coletivo (Volume e Taxas de Conversão)</div>
+
+          <div class="funnel-container">
+            <div style="background: var(--funnel-1); color: white; padding: 10px 50px; border-radius: 10px; width: 78%; text-align: center; position: relative; box-shadow: 0 3px 8px rgba(34,197,94,0.3);">
+              <div class="funnel-label">Adicionadas</div>
+              <div style="font-size: 2.4em; font-weight: bold;">6</div>
+              <div class="funnel-rate">(100.0%)</div>
+            </div>
+
+            <div style="background: var(--funnel-2); color: white; padding: 9px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(59,130,246,0.3);">
+              <div class="funnel-label">Aprovadas em Análise<br>Mercadológica/Financeira</div>
+              <div style="font-size: 2.1em; font-weight: bold;">2</div>
+              <div class="funnel-rate">(33.3%)</div>
+            </div>
+
+            <div style="background: var(--funnel-3); color: white; padding: 8px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(245,158,11,0.3);">
+              <div class="funnel-label">Aprovadas em<br>Análise Jurídica</div>
+              <div style="font-size: 1.9em; font-weight: bold;">0</div>
+              <div class="funnel-rate">(0.0%)</div>
+            </div>
+
+            <div style="background: var(--funnel-4); color: white; padding: 7px 35px; width: 42%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(148,163,184,0.3);">
+              <div class="funnel-label">Aprovadas em<br>Validação Jurídica</div>
+              <div style="font-size: 1.7em; font-weight: bold;">0</div>
+              <div class="funnel-rate">(0.0%)</div>
+            </div>
+
+            <div style="background: var(--funnel-5); color: white; padding: 7px 30px; width: 30%; text-align: center; position: relative; border-radius: 0 0 10px 10px; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%); box-shadow: 0 3px 8px rgba(22,163,74,0.3);">
+              <div class="funnel-label">Viabilidade Total</div>
+              <div style="font-size: 1.6em; font-weight: bold;">0</div>
+              <div class="funnel-rate">(0.0%)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINI GRÁFICO DE BARRAS -->
+        <div class="section">
+          <h2>Mini Gráfico de Barras (Volume por Etapa - 07/11)</h2>
+          <div class="mini-bar-container">
+            <div class="mini-bar-item">
+              <div class="mini-bar-label">Adicionadas</div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: 100%;"></div></div>
+              <div class="mini-bar-value">6</div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-label">M/F</div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: 33.3%;"></div></div>
+              <div class="mini-bar-value">2</div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-label">Jurídica</div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: 0%;"></div></div>
+              <div class="mini-bar-value">0</div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-label">Validação</div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: 0%;"></div></div>
+              <div class="mini-bar-value">0</div>
+            </div>
+            <div class="mini-bar-item">
+              <div class="mini-bar-label">Viab. Total</div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: 0%;"></div></div>
+              <div class="mini-bar-value">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA -->
+      <div class="right">
+        <!-- RANKING INDIVIDUAL (DIA 07/11) -->
+        <div class="section">
+          <h2>B. Produção Individual (Visão por Prestador)</h2>
+          <table>
+            <thead><tr><th>Nome</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th></tr></thead>
+            <tbody>
+              <tr style="background:#ecfdf5"><td><strong>1. Ailton dos Anjos Menezes</strong></td><td>5</td><td>2</td><td>2</td></tr>
+              <tr style="background:#f0fdf4"><td><strong>2. Angelo Raphael</strong></td><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>Tarly De Souza</td><td>0</td><td>0</td><td>0</td></tr>
+            </tbody>
+          </table>
+          <canvas id="rankingChart" class="ranking-chart"></canvas>
+        </div>
+
+        <!-- PRODUÇÃO INDIVIDUAL CONSOLIDADA (29/10 → 07/11) -->
+        <div class="section">
+          <h2>Produção Individual (Visão por Prestador) - 29/10 a 07/11/2025</h2>
+          <table style="font-size:0.84em;">
+            <thead><tr><th>Nome</th><th>Adic.</th><th>M/F</th><th>Jur.</th><th>Viab.</th><th>Rep. M/F</th><th>Rep. Jur.</th></tr></thead>
+            <tbody>
+              <tr><td>Ailton dos Anjos Menezes</td><td>41</td><td>21</td><td>3</td><td>1</td><td>9</td><td>0</td></tr>
+              <tr><td>Angelo Raphael</td><td>33</td><td>8</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>Tarly De Souza</td><td>22</td><td>5</td><td>0</td><td>0</td><td>4</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Dashboard gerado via GitHub Pages | Atualizado em 07/11/2025
+    </div>
+  </div>
+
+  <script>
+    const logo = document.getElementById('logo');
+    const titles = [document.getElementById('main-title'), ...document.querySelectorAll('h2')];
+    logo.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = logo.width; canvas.height = logo.height;
+      ctx.drawImage(logo, 0, 0);
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 40) {
+        if (data[i + 3] > 100) { r += data[i]; g += data[i + 1]; b += data[i + 2]; count++; }
+      }
+      if (count) {
+        const color = `rgb(${Math.floor(r/count)}, ${Math.floor(g/count)}, ${Math.floor(b/count)})`;
+        titles.forEach(t => t.style.color = color);
+      }
+    };
+
+    // GRÁFICO DE BARRAS: RANKING DO DIA
+    new Chart(document.getElementById('rankingChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Ailton', 'Angelo', 'Tarly'],
+        datasets: [
+          { label: 'Adicionadas', data: [5, 1, 0], backgroundColor: '#3b82f6' },
+          { label: 'Aprovadas M/F', data: [2, 0, 0], backgroundColor: '#10b981' },
+          { label: 'Perdas M/F', data: [2, 0, 0], backgroundColor: '#ef4444' }
+        ]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+    });
+  </script>
+</body>
+</html>
