@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Relatório Produção - 10/11/2025</title>
+  <title>Relatório Produção - 11/11/2025</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -22,7 +22,6 @@
       position: relative;
     }
 
-    /* CANVAS DE FUNDO */
     #bg-canvas {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       z-index: -1; pointer-events: none;
@@ -110,7 +109,7 @@
       <img src="logo.png" alt="Logo" class="logo" id="logo">
       <div class="title-block">
         <div class="title" id="main-title">Relatório de Desempenho de Produção de Oportunidades</div>
-        <div class="subtitle">10 de Novembro de 2025</div>
+        <div class="subtitle">11 de Novembro de 2025</div>
       </div>
     </div>
 
@@ -122,8 +121,8 @@
           <table>
             <thead><tr><th>Etapa</th><th>Total (Volume)</th><th>Conversão da Etapa Anterior (%)</th><th>Conversão Total (%)</th></tr></thead>
             <tbody>
-              <tr><td>Adicionadas</td><td>3</td><td>N/A</td><td>100.0%</td></tr>
-              <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>2</td><td>66.7%</td><td>66.7%</td></tr>
+              <tr><td>Adicionadas</td><td>6</td><td>N/A</td><td>100.0%</td></tr>
+              <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>2</td><td>33.3%</td><td>33.3%</td></tr>
               <tr><td>Aprovadas em Análise Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
               <tr><td>Aprovadas em Validação Jurídica</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
               <tr><td>Aprovadas em Viabilidade Total</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
@@ -134,13 +133,13 @@
           <div class="funnel-container">
             <div style="background: var(--funnel-1); color: white; padding: 10px 50px; border-radius: 10px; width: 78%; text-align: center; position: relative;">
               <div class="funnel-label">Adicionadas</div>
-              <div style="font-size: 2.4em; font-weight: bold;">3</div>
+              <div style="font-size: 2.4em; font-weight: bold;">6</div>
               <div class="funnel-rate">(100.0%)</div>
             </div>
             <div style="background: var(--funnel-2); color: white; padding: 9px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);">
               <div class="funnel-label">Aprovadas em Análise<br>Mercadológica/Financeira</div>
               <div style="font-size: 2.1em; font-weight: bold;">2</div>
-              <div class="funnel-rate">(66.7%)</div>
+              <div class="funnel-rate">(33.3%)</div>
             </div>
             <div style="background: var(--funnel-3); color: white; padding: 8px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);">
               <div class="funnel-label">Aprovadas em<br>Análise Jurídica</div>
@@ -167,11 +166,11 @@
             <div class="mini-bar-item">
               <div class="mini-bar-label">Adicionadas</div>
               <div class="mini-bar"><div class="mini-bar-fill" style="width: 100%;"></div></div>
-              <div class="mini-bar-value">3</div>
+              <div class="mini-bar-value">6</div>
             </div>
             <div class="mini-bar-item">
               <div class="mini-bar-label">M/F</div>
-              <div class="mini-bar"><div class="mini-bar-fill" style="width: 66.7%;"></div></div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: 33.3%;"></div></div>
               <div class="mini-bar-value">2</div>
             </div>
             <div class="mini-bar-item">
@@ -200,9 +199,9 @@
           <table>
             <thead><tr><th>Nome</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th></tr></thead>
             <tbody>
-              <tr style="background:#ecfdf5"><td><strong>1. Ailton dos Anjos Menezes</strong></td><td>3</td><td>2</td><td>6</td></tr>
-              <tr style="background:#f0fdf4"><td><strong>2. Angelo Raphael</strong></td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>Tarly De Souza</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr style="background:#ecfdf5"><td><strong>1. Tarly De Souza</strong></td><td>5</td><td>0</td><td>2</td></tr>
+              <tr style="background:#f0fdf4"><td><strong>2. Ailton dos Anjos Menezes</strong></td><td>1</td><td>2</td><td>1</td></tr>
+              <tr><td>Angelo Raphael</td><td>0</td><td>0</td><td>0</td></tr>
             </tbody>
           </table>
           <canvas id="rankingChart" class="ranking-chart"></canvas>
@@ -210,13 +209,13 @@
 
         <!-- CONSOLIDADO -->
         <div class="section">
-          <h2>Consolidado 29/10 a 10/11</h2>
+          <h2>Consolidado 29/10 a 11/11</h2>
           <table style="font-size:0.84em;">
             <thead><tr><th>Nome</th><th>Adic.</th><th>M/F</th><th>Jur.</th><th>Viab.</th><th>Rep. M/F</th><th>Rep. Jur.</th></tr></thead>
             <tbody>
-              <tr><td>Ailton dos Anjos Menezes</td><td>44</td><td>23</td><td>3</td><td>1</td><td>15</td><td>0</td></tr>
+              <tr><td>Ailton dos Anjos Menezes</td><td>45</td><td>25</td><td>3</td><td>1</td><td>16</td><td>0</td></tr>
               <tr><td>Angelo Raphael</td><td>33</td><td>8</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>Tarly De Souza</td><td>22</td><td>5</td><td>0</td><td>0</td><td>4</td><td>0</td></tr>
+              <tr><td>Tarly De Souza</td><td>27</td><td>5</td><td>0</td><td>0</td><td>6</td><td>0</td></tr>
             </tbody>
           </table>
         </div>
@@ -224,7 +223,7 @@
     </div>
 
     <div class="footer">
-      Dashboard com animação de linhas e bolhas | Atualizado em 10/11/2025
+      Dashboard com animação de fundo | Atualizado em 11/11/2025
     </div>
   </div>
 
@@ -357,11 +356,11 @@
     new Chart(document.getElementById('rankingChart'), {
       type: 'bar',
       data: {
-        labels: ['Ailton', 'Angelo', 'Tarly'],
+        labels: ['Tarly', 'Ailton', 'Angelo'],
         datasets: [
-          { label: 'Adicionadas', data: [3, 0, 0], backgroundColor: '#3b82f6' },
-          { label: 'Aprovadas M/F', data: [2, 0, 0], backgroundColor: '#10b981' },
-          { label: 'Perdas M/F', data: [6, 0, 0], backgroundColor: '#ef4444' }
+          { label: 'Adicionadas', data: [5, 1, 0], backgroundColor: '#3b82f6' },
+          { label: 'Aprovadas M/F', data: [0, 2, 0], backgroundColor: '#10b981' },
+          { label: 'Perdas M/F', data: [2, 1, 0], backgroundColor: '#ef4444' }
         ]
       },
       options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
