@@ -69,9 +69,6 @@
     .funnel-label {
       position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 0.82em; font-weight: 600; width: 36%; text-align: left; line-height: 1.2; color: white;
     }
-    .funnel-rate {
-      position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 0.9em; font-weight: bold; color: white;
-    }
 
     .mini-bar-container {
       margin-top: 12px;
@@ -115,46 +112,41 @@
 
     <div class="grid">
       <div class="left">
-        <!-- A. PRODUÇÃO COLETIVA (5 PESQUISADORES) -->
+        <!-- A. PRODUÇÃO COLETIVA (APENAS VOLUME) -->
         <div class="section">
           <h2>A. Produção Coletiva (Visão Macro)</h2>
           <table>
-            <thead><tr><th>Etapa</th><th>Total (Volume)</th><th>Conversão da Etapa Anterior (%)</th><th>Conversão Total (%)</th></tr></thead>
+            <thead><tr><th>Etapa</th><th>Total (Volume)</th></tr></thead>
             <tbody>
-              <tr><td>Adicionadas</td><td>6</td><td>N/A</td><td>100.0%</td></tr>
-              <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>3</td><td>50.0%</td><td>50.0%</td></tr>
-              <tr><td>Aprovadas em Análise Jurídica</td><td>2</td><td>66.7%</td><td>33.3%</td></tr>
-              <tr><td>Aprovadas em Validação Jurídica</td><td>4</td><td>200.0%</td><td>66.7%</td></tr>
-              <tr><td>Aprovadas em Viabilidade Total</td><td>0</td><td>0.0%</td><td>0.0%</td></tr>
+              <tr><td>Adicionadas</td><td>6</td></tr>
+              <tr><td>Aprovadas em Análise Mercadológica/Financeira</td><td>3</td></tr>
+              <tr><td>Aprovadas em Análise Jurídica</td><td>2</td></tr>
+              <tr><td>Aprovadas em Validação Jurídica</td><td>4</td></tr>
+              <tr><td>Aprovadas em Viabilidade Total</td><td>0</td></tr>
             </tbody>
           </table>
 
-          <div class="funnel-title">Funil de Aprovação Coletivo</div>
+          <div class="funnel-title">Funil de Aprovação Coletivo (Volume)</div>
           <div class="funnel-container">
             <div style="background: var(--funnel-1); color: white; padding: 10px 50px; border-radius: 10px; width: 78%; text-align: center; position: relative;">
               <div class="funnel-label">Adicionadas</div>
               <div style="font-size: 2.4em; font-weight: bold;">6</div>
-              <div class="funnel-rate">(100.0%)</div>
             </div>
             <div style="background: var(--funnel-2); color: white; padding: 9px 45px; width: 68%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);">
               <div class="funnel-label">Aprovadas em Análise<br>Mercadológica/Financeira</div>
               <div style="font-size: 2.1em; font-weight: bold;">3</div>
-              <div class="funnel-rate">(50.0%)</div>
             </div>
             <div style="background: var(--funnel-3); color: white; padding: 8px 40px; width: 55%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);">
               <div class="funnel-label">Aprovadas em<br>Análise Jurídica</div>
               <div style="font-size: 1.9em; font-weight: bold;">2</div>
-              <div class="funnel-rate">(66.7%)</div>
             </div>
             <div style="background: var(--funnel-4); color: white; padding: 7px 35px; width: 42%; text-align: center; position: relative; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);">
               <div class="funnel-label">Aprovadas em<br>Validação Jurídica</div>
               <div style="font-size: 1.7em; font-weight: bold;">4</div>
-              <div class="funnel-rate">(200.0%)</div>
             </div>
             <div style="background: var(--funnel-5); color: white; padding: 7px 30px; width: 30%; text-align: center; position: relative; border-radius: 0 0 10px 10px; clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);">
               <div class="funnel-label">Viabilidade Total</div>
               <div style="font-size: 1.6em; font-weight: bold;">0</div>
-              <div class="funnel-rate">(0.0%)</div>
             </div>
           </div>
         </div>
@@ -223,7 +215,7 @@
     </div>
 
     <div class="footer">
-      Izabele e Carol na Coletiva | 3 pesquisadores no Ranking | Atualizado em 12/11/2025
+      Conversões removidas da Tabela A | Funil apenas com Volume | Atualizado em 12/11/2025
     </div>
   </div>
 
