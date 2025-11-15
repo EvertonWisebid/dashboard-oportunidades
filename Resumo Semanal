@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard BI - Produção de Oportunidades (10-14/11/2025)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #1e40af; --success: #16a34a; --danger: #dc2626; --warning: #f59e0b;
+      --gray: #6b7280; --light: #f9fafb; --dark: #1f2937; --card-bg: #ffffff;
+      --funnel-1: #22c55e; --funnel-2: #3b82f6; --funnel-3: #f59e0b; --funnel-4: #94a3b8; --funnel-5: #16a34a;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-main);
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: var(--dark);
+      height: 100vh;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    /* SMART TV OPTIMIZATION */
+    @media (min-width: 1200px) {
+      body { font-size: 1.2rem; padding: 30px; }
+      .container { max-width: 1800px; }
+      .tab { padding: 18px; font-size: 1.3rem; }
+      .card p { font-size: 2.2rem; }
+      .insight { font-size: 1.3rem; padding: 20px; }
+      table { font-size: 1.15rem; }
+      th, td { padding: 14px 16px; }
+      .chart-container { height: 380px; }
+      .funnel-step span:last-child { font-size: 2.8rem; }
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: auto;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+      height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 16px 16px 0 0;
+    }
+    header h1 { font-size: 2.2rem; font-weight: 700; }
+    header p { margin-top: 8px; font-size: 1.2rem; opacity: 0.95; }
+
+    .tabs {
+      display: flex;
+      background: #f1f5f9;
+      border-bottom: 3px solid #e2e8f0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .tab {
+      flex: 1;
+      min-width: 180px;
+      padding: 16px;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+    .tab:hover { background: #e2e8f0; }
+    .tab.active {
+      background: white;
+      color: var(--primary);
+      border-bottom: 4px solid var(--primary);
+      font-weight: 700;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 30px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .tab-content.active { display: flex; flex-direction: column; gap: 25px; animation: fadeIn 0.6s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    th {
+      background: #f8fafc;
+      color: var(--dark);
+      font-weight: 700;
+      padding: 16px;
+      text-align: center;
+      font-size: 1.05rem;
+    }
+    td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    tr:hover { background: #f8fafc; }
+    .total-row td {
+      font-weight: bold;
+      background: #ecfdf5;
+      border-top: 3px solid var(--success);
+      font-size: 1.1rem;
+    }
+
+    .chart-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      height: 380px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border-left: 6px solid var(--primary);
+      transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card h3 { margin: 0 0 10px; font-size: 1rem; color: var(--gray); font-weight: 600; }
+    .card p { margin: 0; font-size: 1.9rem; font-weight: bold; color: var(--dark); }
+
+    .insight {
+      background: linear-gradient(90deg, #dbeafe 0%, #bfdbfe 100%);
+      border-left: 6px solid var(--primary);
+      padding: 18px;
+      border-radius: 12px;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #1e40af;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    /* FUNIL COLETIVO */
+    .funnel-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin: 30px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .funnel-step {
+      width: 100%;
+      max-width: 700px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      position: relative;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .funnel-step:hover { transform: scale(1.02); }
+    .funnel-step span:first-child { font-size: 1.1rem; }
+    .funnel-step span:last-child { font-size: 2.4rem; font-weight: 800; }
+
+    .funnel-step-1 { background: var(--funnel-1); max-width: 700px; }
+    .funnel-step-2 { background: var(--funnel-2); max-width: 550px; clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); }
+    .funnel-step-3 { background: var(--funnel-3); max-width: 450px; clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); }
+    .funnel-step-4 { background: var(--funnel-4); max-width: 350px; clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); }
+    .funnel-step-5 { background: var(--funnel-5); max-width: 250px; border-radius: 0 0 12px 12px; clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      border-top: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Dashboard de Desempenho de Oportunidades</h1>
+    <p>Período: 10 a 14 de novembro de 2025</p>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="tarly">Tarly De Souza</div>
+    <div class="tab" data-tab="ailton">Ailton dos Anjos</div>
+    <div class="tab" data-tab="izabele">Izabele Habeite</div>
+    <div class="tab" data-tab="carol">Carol Serra</div>
+    <div class="tab" data-tab="consolidado">Consolidado</div>
+  </div>
+
+  <!-- TARLY -->
+  <div id="tarly" class="tab-content active">
+    <h2>Tarly De Souza</h2>
+    <table>
+      <thead><tr><th>Data</th><th>Adic.</th><th>Aprov. M/F</th><th>Perdas M/F</th><th>Devolvidas</th></tr></thead>
+      <tbody>
+        <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>11/11</td><td>5</td><td>0</td><td>2</td><td>1</td></tr>
+        <tr><td>12/11</td><td>4</td><td>2</td><td>0</td><td>1</td></tr>
+        <tr><td>13/11</td><td>2</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr class="total-row"><td>Total</td><td>11</td><td>6</td><td>2</td><td>2</td></tr>
+      </tbody>
+    </table>
+    <div class="chart-container"><canvas id="chart-tarly"></canvas></div>
+    <div class="summary">
+      <div class="card"><h3>Total Adicionadas</h3><p>11</p></div>
+      <div class="card"><h3>Aprov. M/F</h3><p>6</p></div>
+      <div class="card"><h3>Taxa de Aprovação</h3><p>75,0%</p></div>
+      <div class="card"><h3>Perdas</h3><p style="color:var(--danger);">2</p></div>
+    </div>
+    <div class="insight">
+      <strong>Insight:</strong> Líder em prospecção com 11 adicionadas. A conversão em M/F atingiu 75,0%, demonstrando alta eficácia na triagem.
+    </div>
+  </div>
+
+  <!-- AILTON -->
+  <div id="ailton" class="tab-content">
+    <h2>Ailton dos Anjos Menezes Neto</h2>
+    <table>
+      <thead><tr><th>Data</th><th>Adic.</th><th>Aprov. M/F</th><th>Perdas M/F</th><th>Devolvidas</th></tr></thead>
+      <tbody>
+        <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>11/11</td><td>1</td><td>2</td><td>1</td><td>0</td></tr>
+        <tr><td>12/11</td><td>2</td><td>1</td><td>6</td><td>1</td></tr>
+        <tr><td>13/11</td><td>4</td><td>5</td><td>0</td><td>0</td></tr>
+        <tr><td>14/11</td><td>2</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="total-row"><td>Total</td><td>9</td><td>8</td><td>7</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <div class="chart-container"><canvas id="chart-ailton"></canvas></div>
+    <div class="summary">
+      <div class="card"><h3>Total Adicionadas</h3><p>9</p></div>
+      <div class="card"><h3>Aprov. M/F</h3><p>8</p></div>
+      <div class="card"><h3>Taxa de Aprovação</h3><p>53,3%</p></div>
+      <div class="card"><h3>Perdas</h3><p style="color:var(--danger);">7</p></div>
+    </div>
+    <div class="insight">
+      <strong>Insight:</strong> Alto volume de prospecção (9 adicionadas) e 8 aprovações M/F. As 7 perdas concentradas em 12/11 sugerem refinamento nos filtros de busca para otimizar análise.
+    </div>
+  </div>
+
+  <!-- IZABELE -->
+  <div id="izabele" class="tab-content">
+    <h2>Izabele Habeite</h2>
+    <table>
+      <thead><tr><th>Data</th><th>Aprov. Jurídica</th><th>Rep. Jurídica</th><th>Devolvidas</th><th>Canceladas</th></tr></thead>
+      <tbody>
+        <tr><td>10/11</td><td>3</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>11/11</td><td>5</td><td>1</td><td>2</td><td>0</td></tr>
+        <tr><td>12/11</td><td>2</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>13/11</td><td>4</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>14/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="total-row"><td>Total</td><td>14</td><td>3</td><td>2</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <div class="chart-container"><canvas id="chart-izabele"></canvas></div>
+    <div class="summary">
+      <div class="card"><h3>Aprov. Jurídica</h3><p>14</p></div>
+      <div class="card"><h3>Rep. Jurídica</h3><p>3</p></div>
+      <div class="card"><h3>Devolvidas</h3><p>2</p></div>
+      <div class="card"><h3>Taxa de Aprovação</h3><p>82,4%</p></div>
+    </div>
+    <div class="insight">
+      <strong>Insight:</strong> Excelente desempenho com 14 aprovações jurídicas. Baixa taxa de reprovação (3) indica alta qualidade nas oportunidades recebidas.
+    </div>
+  </div>
+
+  <!-- CAROL -->
+  <div id="carol" class="tab-content">
+    <h2>Carol Serra</h2>
+    <table>
+      <thead><tr><th>Data</th><th>Aprov. Validação</th><th>Rep. Validação</th><th>Devolvidas</th><th>Canceladas</th><th>Viab. Total</th></tr></thead>
+      <tbody>
+        <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>11/11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>12/11</td><td>4</td><td>0</td><td>0</td><td>1</td><td>4</td></tr>
+        <tr><td>13/11</td><td>5</td><td>0</td><td>0</td><td>0</td><td>5</td></tr>
+        <tr><td>14/11</td><td>2</td><td>0</td><td>0</td><td>0</td><td>2</td></tr>
+        <tr class="total-row"><td>Total</td><td>11</td><td>0</td><td>0</td><td>1</td><td>11</td></tr>
+      </tbody>
+    </table>
+    <div class="chart-container"><canvas id="chart-carol"></canvas></div>
+    <div class="summary">
+      <div class="card"><h3>Aprov. Validação</h3><p>11</p></div>
+      <div class="card"><h3>Rep. Validação</h3><p>0</p></div>
+      <div class="card"><h3>Retiradas</h3><p>1</p></div>
+      <div class="card"><h3>Taxa de Aprovação</h3><p>100%</p></div>
+    </div>
+    <div class="insight">
+      <strong>Insight:</strong> 11 validações com 100% de aprovação. Única retirada em 12/11. Excelência operacional na etapa final.
+    </div>
+  </div>
+
+  <!-- CONSOLIDADO -->
+  <div id="consolidado" class="tab-content">
+    <h2>Funil de Aprovação Coletivo (Volume)</h2>
+    <div class="funnel-chart">
+      <div class="funnel-step funnel-step-1"><span>Adicionadas</span><span>14</span></div>
+      <div class="funnel-step funnel-step-2"><span>Aprov. M/F</span><span>6</span></div>
+      <div class="funnel-step funnel-step-3"><span>Aprov. Jurídica</span><span>14</span></div>
+      <div class="funnel-step funnel-step-4"><span>Aprov. Validação</span><span>11</span></div>
+      <div class="funnel-step funnel-step-5"><span>Viabilidade Total</span><span>0</span></div>
+    </div>
+
+    <h2>Tabela de Indicadores Coletivos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Pesquisador</th><th>Adic.</th><th>M/F</th><th>Jur.</th><th>Val.</th><th>Viab.</th><th>Rep. M/F</th><th>Rep. Jur.</th><th>Devolv.</th><th>Retir.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Ailton dos Anjos</td><td>8</td><td>4</td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>2</td><td>0</td></tr>
+        <tr><td>Tarly De Souza</td><td>6</td><td>2</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>14</td><td>0</td><td>0</td><td>0</td><td>3</td><td>2</td><td>0</td></tr>
+        <tr><td>Carol Serra</td><td>0</td><td>0</td><td>0</td><td>11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr class="total-row"><td>TOTAL</td><td>14</td><td>6</td><td>14</td><td>11</td><td>0</td><td>8</td><td>3</td><td>5</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Atualizado em: 14/11/2025 | Wisebid © 2025 | Dados validados com PDFs oficiais (29/10 e 30/10)
+  </footer>
+</div>
+
+<script>
+  // Troca de abas
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Gráficos
+  const labels = ['10/11', '11/11', '12/11', '13/11', '14/11'];
+  const createChart = (id, data1, data2, data3, labels1, labels2, labels3) => {
+    new Chart(document.getElementById(id), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: labels1, data: data1, backgroundColor: '#1e40af' },
+          { label: labels2, data: data2, backgroundColor: '#16a34a' },
+          { label: labels3, data: data3, backgroundColor: '#dc2626' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'top', labels: { font: { size: 14 } } } },
+        scales: { y: { beginAtZero: true, ticks: { font: { size: 13 } } } }
+      }
+    });
+  };
+
+  createChart('chart-tarly', [0,5,4,2,0], [0,0,2,2,2], [0,2,0,0,0], 'Adicionadas', 'Aprov. M/F', 'Perdas');
+  createChart('chart-ailton', [0,1,2,4,2], [0,2,1,5,0], [0,1,6,0,0], 'Adicionadas', 'Aprov. M/F', 'Perdas');
+  createChart('chart-izabele', [3,5,2,4,0], [1,1,1,0,0], [], 'Aprov. Jurídica', 'Rep. Jurídica', '');
+  new Chart(document.getElementById('chart-carol'), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ label: 'Aprov. Validação', data: [0,0,4,5,2], backgroundColor: '#1e40af' }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+  });
+</script>
+
+</body>
+</html>
